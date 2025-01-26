@@ -221,3 +221,195 @@ ostrich = NonFlyingBird()
 ostrich.eating_bird()   # Output: Non-Flying Bird Eats
 ostrich.running_bird()  # Output: Non-Flying Bird Runs
 ```
+The Bird base class provides a contract (eating_bird), and both FlyingBirds and NonFlyingBird subclasses implement it appropriately. This ensures that both subclasses can replace the Bird class without breaking any functionality.
+
+## Interface Segregation Principle (ISP)
+This principle advocates that an interface should only include methods that are relevant to the implementing class. in other words, it goes against Fat or Bulky interfaces in class instead having small interfaces with group of methods each serving a perticular purpose.
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape:
+    @abstractmethod
+    def calculate_area(self):
+        pass
+
+    @abstractmethod
+    def calculate_volume(self):
+        pass
+
+    @abstractmethod
+    def calculate_peri(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calculate_area(self):
+        return 3.14 * self.radius * self.radius
+
+    def calculate_peri(self):
+        return 2 * 3.14 * self.radius
+
+    def calculate_volume(self):
+        raise NotImplementedError("Circle does not have a volume!")
+
+class Ractangle(Shape):
+    def __init__(self, length, breadth):
+        self.length = length
+        self.breadth = breadth
+
+    def calculate_area(self):
+        return self.breadth * self.length
+
+    def calculate_volume(self):
+        raise NotImplementedError("Ractangle does not have Volume!")
+
+    def calculate_peri(self):
+        return 2 * (self.length + self.breadth)
+
+if __name__ == '__main__':
+    circle = Circle(10)
+    area = circle.calculate_area()
+    perimeter = circle.calculate_peri()
+    print(f"Area : {area} , Perimeter: {perimeter} ")
+
+    ract = Ractangle(10, 20)
+    ract.calculate_area()
+    ract.calculate_volume() """raise NotImplementedError("Ractangle does not have Volume!")
+NotImplementedError: Ractangle does not have Volume!"""
+```
+To Resolve this, instead of making bulky Interface which cover so many things, we can concentrate on making interfaces with group of relevent menthods, like we can interface "Shape" with general purpose, than create two more interfaces like 3d_shapes, 2d_shapes, which contains methods for that only.
+Code :
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape:
+    @abstractmethod
+    def display_result(self):
+        pass
+
+# Interface for 2D Shapes
+class Shape2D(Shape):
+    @abstractmethod
+    def calculate_area(self):
+        pass
+
+    @abstractmethod
+    def calculate_perimeter(self):
+        pass
+
+# Interface for 3D Shapes
+class Shape3D(Shape):
+    @abstractmethod
+    def calculate_volume(self):
+        pass
+
+    @abstractmethod
+    def calculate_surface_area(self):
+        pass
+
+class Circle(Shape2D):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calculate_area(self):
+        return 3.14 * self.radius * self.radius
+
+    def calculate_perimeter(self):
+        return 2 * 3.14 * self.radius
+
+    def display_result(self):
+        print(f"Circle Area : {self.calculate_area()}, Circle Perimeter : {self.calculate_perimeter()}")
+
+
+class Cube(Shape3D):
+    def __init__(self, side):
+        self.side = side
+
+    def calculate_volume(self):
+        return self.side ** 3
+
+    def calculate_surface_area(self):
+        return 6 * (self.side ** 2)
+
+    def display_result(self):
+        print(f"Cube Volume : {self.calculate_volume()} , Cube Surface Area : {self.calculate_surface_area()}")
+
+
+if __name__ == "__main__":
+    circle_obj = Circle(10)
+    circle_obj.display_result()
+
+    cube_obj = Cube(20)
+    cube_obj.display_result()
+    
+"""
+Circle Area : 314.0, Circle Perimeter : 62.800000000000004
+Cube Volume : 8000 , Cube Surface Area : 2400
+"""
+```
+Shape2D interface is designed specifically for 2D shapes with methods like calculate_area and calculate_perimeter.
+Shape3D interface is designed for 3D shapes with methods like calculate_volume and calculate_surface_area.
+Each shape class is responsible for implementing only the methods relevant to its type (2D or 3D), improving modularity and maintainability.
+
+## Dependency Inversion Principle (DIP)
+As the name suggest, inverse the dependency i.e. never depend on anything concrete always dependent on interfaces. in simple words high level module should never be dependent on lower level module. they should be dependent on abstraction.
+Example:
+
+```python
+class CreditCardProcessor:
+    def process_payment(self, amount):
+        print(f"Processing Credit Card payment of {amount}")
+
+class PaymentService:
+    def __init__(self):
+        self.processor = CreditCardProcessor()  # Direct dependency
+
+    def make_payment(self, amount):
+        self.processor.process_payment(amount)
+
+service = PaymentService()
+service.make_payment(1000)
+```
+The PaymentService is tightly coupled to CreditCardProcessor. Adding new payment types like PayPal would require modifying the PaymentService.
+to resolve this check below code:
+
+```python
+from abc import ABC, abstractmethod
+
+# Abstraction
+class PaymentProcessor(ABC):
+    @abstractmethod
+    def process_payment(self, amount):
+        pass
+
+# Low-Level Modules
+class CreditCardProcessor(PaymentProcessor):
+    def process_payment(self, amount):
+        print(f"Processing Credit Card payment of {amount}")
+
+class PayPalProcessor(PaymentProcessor):
+    def process_payment(self, amount):
+        print(f"Processing PayPal payment of {amount}")
+
+# High-Level Module
+class PaymentService:
+    def __init__(self, processor: PaymentProcessor): 
+        self.processor = processor
+
+    def make_payment(self, amount):
+        self.processor.process_payment(amount)
+
+credit_card_service = PaymentService(CreditCardProcessor())
+credit_card_service.make_payment(1000)
+
+paypal_service = PaymentService(PayPalProcessor())
+paypal_service.make_payment(2000)
+
+```
+you might thinks, whats the differece high level module PaymentService is still dependent on PaymentProcessor, but its not tightly coupled now. Let me clarify why the high-level module (in this case, PaymentService) still depends on the PaymentProcessor abstraction and why this is not considered tight coupling.
+- The high-level module doesn't care how the PaymentProcessor implementations work. It only relies on the contract (interface) provided by the PaymentProcessor abstraction.
+- Concrete implementations can be swapped in or out without modifying the PaymentService code.
