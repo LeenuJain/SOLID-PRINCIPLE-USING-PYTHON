@@ -117,7 +117,7 @@ To resolve this, we gonna use abstract method, Abstract method has no implementa
 
 ```python
 from abc import ABC, abstractmethod
-class PaymentMethod:
+class PaymentMethod(ABC):
     @abstractmethod
     def pay(self, amount):
         pass
@@ -159,11 +159,12 @@ let's suppose we have a bird class in which two methods are there, one is fly an
 
 ```python
 from abc import ABC, abstractmethod
-class Bird:
+class Bird(ABC):
     @abstractmethod
     def flyingbird(self):
         pass
 
+    @abstractmethod
     def eatingbird(self):
         pass
 
@@ -229,7 +230,7 @@ This principle advocates that an interface should only include methods that are 
 ```python
 from abc import ABC, abstractmethod
 
-class Shape:
+class Shape(ABC):
     @abstractmethod
     def calculate_area(self):
         pass
@@ -277,7 +278,8 @@ if __name__ == '__main__':
 
     ract = Ractangle(10, 20)
     ract.calculate_area()
-    ract.calculate_volume() """raise NotImplementedError("Ractangle does not have Volume!")
+    ract.calculate_volume()
+"""raise NotImplementedError("Ractangle does not have Volume!")
 NotImplementedError: Ractangle does not have Volume!"""
 ```
 To Resolve this, instead of making bulky Interface which cover so many things, we can concentrate on making interfaces with group of relevent menthods, like we can interface "Shape" with general purpose, than create two more interfaces like 3d_shapes, 2d_shapes, which contains methods for that only.
@@ -286,7 +288,7 @@ Code :
 ```python
 from abc import ABC, abstractmethod
 
-class Shape:
+class Shape(ABC):
     @abstractmethod
     def display_result(self):
         pass
