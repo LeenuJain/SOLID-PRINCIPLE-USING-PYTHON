@@ -2,12 +2,7 @@
 explanation on solid principle with python code
 
 # System Desing
-System Design is the process of designing the elements of the system such as Architecture, Module, Components & different interfaces of those componnents, and Data flow over the system.
-the goal is the create system which is efficient, maintainable & scalable.
-
-## 📘 System Design Basics (Beginner-Friendly)
-
-System Design is the process of designing the elements of a system such as **Architecture**, **Modules**, **Components**, **Interfaces**, and **Data Flow** — with the goal of building a system that is **efficient**, **maintainable**, and **scalable**.
+System Design is the process of designing the elements of the system such as **Architecture**, **Modules**, **Components** & different **Interfaces** of those componnents, and **Data Flow** over the system — with the goal of building a system that is **efficient**, **maintainable**, and **scalable**.
 
 ---
 
