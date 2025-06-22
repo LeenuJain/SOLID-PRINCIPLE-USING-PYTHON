@@ -172,8 +172,76 @@ You might think, The code looks pretty big now, but even if you want to add anot
 
 ## Liskov Substitution Principle (LSP)
 Any Derived class should be able to substitute its parent class without consumer knowing it. The behavior of a subclass should be consistent with the behavior of the parent class. in simple words a subclass or derived class must able to do all the things that a parent class do.LSP is about **behavioral correctness in substitution**.
+let's suppose we have a bird class in which two methods are there, one is fly another is eat, now there is two derived classes one is parrot & second is ostrich, so parrot class can perform both fly & eat, but ostrich cannot fly. Here LSP failed.
 
-Imagine you're building an e-commerce app (like Amazon or Flipkart), and you support different payment methods: 
+```python
+from abc import ABC, abstractmethod
+class Bird(ABC):
+    @abstractmethod
+    def flyingbird(self):
+        pass
+
+    @abstractmethod
+    def eatingbird(self):
+        pass
+
+class Parrot(Bird):
+    def flyingbird(self):
+        print("Parrot Can fly")
+
+    def eatingbird(self):
+        print("Parrot Can Eat")
+
+class Ostrich(Bird):
+    def eatingbird(self):
+        print(f"Ostrich Can Eat")
+
+parrot = Parrot()
+parrot.flyingbird()
+parrot.eatingbird()
+
+ostrich = Ostrich()
+ostrich.eatingbird()
+ostrich.flyingbird()
+```
+This code violates the Liskov Substitution Principle (LSP) because the subclass Ostrich does not fully implement the functionality defined in the parent class Bird. Specifically, the flyingbird() method is not implemented for Ostrich. While the code may still work in some cases, it can lead to unexpected issues, particularly when polymorphism is involved.
+To resolve this we need to think of a better architecture, like bird class as generalized, we can create sepearate class of flyingbirds and nonflyingbirds, than derive classes like parrot & ostrich.
+
+![image](https://github.com/user-attachments/assets/e2156e17-f13e-49d8-8c4b-159d2d3bce65)
+
+```python
+from abc import ABC, abstractmethod
+
+class Bird(ABC):
+    @abstractmethod
+    def eating_bird(self):
+        pass
+
+class FlyingBird(Bird):
+    def eating_bird(self):
+        print("Flying Bird Eats")
+
+    def flying_bird(self):
+        print("Flying Bird Flies")
+
+class NonFlyingBird(Bird):
+    def eating_bird(self):
+        print("Non-Flying Bird Eats")
+
+    def running_bird(self):
+        print("Non-Flying Bird Runs")
+
+parrot = FlyingBird()
+parrot.eating_bird()    # Output: Flying Bird Eats
+parrot.flying_bird()    # Output: Flying Bird Flies
+
+ostrich = NonFlyingBird()
+ostrich.eating_bird()   # Output: Non-Flying Bird Eats
+ostrich.running_bird()  # Output: Non-Flying Bird Runs
+```
+The Bird base class provides a contract (eating_bird), and both FlyingBirds and NonFlyingBird subclasses implement it appropriately. This ensures that both subclasses can replace the Bird class without breaking any functionality.
+
+Lets consider one more example with real time application. Imagine you're building an e-commerce app (like Amazon or Flipkart), and you support different payment methods: 
 - Credit Card
 - UPI
 - Cash on Delivery (COD)
@@ -260,43 +328,6 @@ This way:
 - COD is not forced to pretend to be an online payment method.
 - Only classes that can truly pay online are substituted in this flow.
 - LSP is preserved ✅
-
-This code violates the Liskov Substitution Principle (LSP) because the subclass Ostrich does not fully implement the functionality defined in the parent class Bird. Specifically, the flyingbird() method is not implemented for Ostrich. While the code may still work in some cases, it can lead to unexpected issues, particularly when polymorphism is involved.
-To resolve this we need to think of a better architecture, like bird class as generalized, we can create sepearate class of flyingbirds and nonflyingbirds, than derive classes like parrot & ostrich.
-
-![image](https://github.com/user-attachments/assets/e2156e17-f13e-49d8-8c4b-159d2d3bce65)
-
-```python
-from abc import ABC, abstractmethod
-
-class Bird(ABC):
-    @abstractmethod
-    def eating_bird(self):
-        pass
-
-class FlyingBird(Bird):
-    def eating_bird(self):
-        print("Flying Bird Eats")
-
-    def flying_bird(self):
-        print("Flying Bird Flies")
-
-class NonFlyingBird(Bird):
-    def eating_bird(self):
-        print("Non-Flying Bird Eats")
-
-    def running_bird(self):
-        print("Non-Flying Bird Runs")
-
-parrot = FlyingBird()
-parrot.eating_bird()    # Output: Flying Bird Eats
-parrot.flying_bird()    # Output: Flying Bird Flies
-
-ostrich = NonFlyingBird()
-ostrich.eating_bird()   # Output: Non-Flying Bird Eats
-ostrich.running_bird()  # Output: Non-Flying Bird Runs
-```
-The Bird base class provides a contract (eating_bird), and both FlyingBirds and NonFlyingBird subclasses implement it appropriately. This ensures that both subclasses can replace the Bird class without breaking any functionality.
 
 ## Interface Segregation Principle (ISP)
 This principle advocates that an interface should only include methods that are relevant to the implementing class. in other words, it goes against Fat or Bulky interfaces in class instead having small interfaces with group of methods each serving a perticular purpose.
