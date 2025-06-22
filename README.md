@@ -27,9 +27,6 @@ System Design is the process of designing the elements of the system such as **A
 | **Scalable**      | Grows well under more users    | Handles 1 lakh orders smoothly during a festival  |
 
 ---
-![System Design Flow](./A_flowchart-style_diagram_in_the_image_illustrates.png)
-![image](![Uploading image.png…]()) 
----
 
 ## Types of System Design
 1. LLD (Low Level Design)
