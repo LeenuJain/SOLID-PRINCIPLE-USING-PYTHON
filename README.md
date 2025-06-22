@@ -171,39 +171,44 @@ Now its easy to add any other payment method. link crypto or debit card payments
 You might think, The code looks pretty big now, but even if you want to add another method now, you dont need to change anything in existing code. just create a new class and simply create its object.
 
 ## Liskov Substitution Principle (LSP)
-Any Derived class should be able to substitute its parent class without consumer knowing it. The behavior of a subclass should be consistent with the behavior of the parent class. in simple words a subclass or derived class must able to do all the things that a parent class do.
-let's suppose we have a bird class in which two methods are there, one is fly another is eat, now there is two derived classes one is parrot & second is ostrich, so parrot class can perform both fly & eat, but ostrich cannot fly. Here LSP failed.
+Any Derived class should be able to substitute its parent class without consumer knowing it. The behavior of a subclass should be consistent with the behavior of the parent class. in simple words a subclass or derived class must able to do all the things that a parent class do.LSP is about **behavioral correctness in substitution**.
+
+Imagine you're building an e-commerce app (like Amazon or Flipkart), and you support different payment methods: 
+- Credit Card
+- UPI
+- Cash on Delivery (COD)
 
 ```python
-from abc import ABC, abstractmethod
-class Bird(ABC):
-    @abstractmethod
-    def flyingbird(self):
-        pass
+class Payment:
+    def pay(self, amount):
+        print(f"Paying ₹{amount}")
 
-    @abstractmethod
-    def eatingbird(self):
-        pass
+class CreditCardPayment(Payment):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} via Credit Card")
 
-class Parrot(Bird):
-    def flyingbird(self):
-        print("Parrot Can fly")
+class UPIPayment(Payment):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} via UPI")
 
-    def eatingbird(self):
-        print("Parrot Can Eat")
+class CODPayment(Payment):
+    def pay(self, amount):
+        raise Exception("Can't process COD online!")
 
-class Ostrich(Bird):
-    def eatingbird(self):
-        print(f"Ostrich Can Eat")
+def process_payment(payment: Payment):
+    payment.pay(500)
 
-parrot = Parrot()
-parrot.flyingbird()
-parrot.eatingbird()
+process_payment(UPIPayment())        # ✅ Works
+process_payment(CreditCardPayment()) # ✅ Works
+process_payment(CODPayment())        # ❌ Raises error
 
-ostrich = Ostrich()
-ostrich.eatingbird()
-ostrich.flyingbird()
 ```
+This breaks LSP. Even though CODPayment is a subclass of Payment, you cannot substitute it safely in place of the parent.
+Real-World Consequences: 
+- The app crashes if someone tries to use COD through this flow.
+- A developer might assume all Payment types are safe to use, but they’re not.
+- The interface (pay()) promises something COD cannot deliver
+
 This code violates the Liskov Substitution Principle (LSP) because the subclass Ostrich does not fully implement the functionality defined in the parent class Bird. Specifically, the flyingbird() method is not implemented for Ostrich. While the code may still work in some cases, it can lead to unexpected issues, particularly when polymorphism is involved.
 To resolve this we need to think of a better architecture, like bird class as generalized, we can create sepearate class of flyingbirds and nonflyingbirds, than derive classes like parrot & ostrich.
 
