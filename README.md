@@ -31,11 +31,8 @@ System Design is the process of designing the elements of the system such as **A
 ### 🖼️ Diagram: System Design Flow
 
 ![System Design Flow](./A_flowchart-style_diagram_in_the_image_illustrates.png)
-![Uploading image.png…]()
-
-
-> 🔺 **Note**: Make sure the image file is saved in your repo with the name above or adjust the path accordingly.
-
+![image](https://github.com/user-attachments/assets/87e4e7a6-43a6-43b0-b2fd-7ed33939c1f2)
+![image](![Uploading image.png…]())  
 ---
 
 ### 🙌 Tip:
