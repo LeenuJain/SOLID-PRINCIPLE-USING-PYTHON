@@ -5,6 +5,48 @@ explanation on solid principle with python code
 System Design is the process of designing the elements of the system such as Architecture, Module, Components & different interfaces of those componnents, and Data flow over the system.
 the goal is the create system which is efficient, maintainable & scalable.
 
+## 📘 System Design Basics (Beginner-Friendly)
+
+System Design is the process of designing the elements of a system such as **Architecture**, **Modules**, **Components**, **Interfaces**, and **Data Flow** — with the goal of building a system that is **efficient**, **maintainable**, and **scalable**.
+
+---
+
+### 📌 Key Concepts Explained (with Examples)
+
+| Term                        | Simple Meaning                           | Example (Food Delivery App)                    |
+|-----------------------------|-------------------------------------------|------------------------------------------------|
+| **Architecture**            | Overall system blueprint                 | Microservices setup, Client-Server design      |
+| **Module**                  | Major function area                      | Login, Search, Payment                         |
+| **Component**               | Building blocks inside modules           | UPI, Wallet, Card payment components           |
+| **Interfaces of Components**| How components talk to each other        | Search takes "pizza" as input, returns results |
+| **Data Flow over System**   | How data moves between parts             | User → Search → Restaurant → Payment           |
+
+---
+
+### 📈 Goals of a Good System
+
+| Term             | Meaning                        | Example in Food App                               |
+|------------------|--------------------------------|---------------------------------------------------|
+| **Efficient**     | Fast, low resource usage       | Quick search & payment                            |
+| **Maintainable**  | Easy to fix or update          | Add new payment method without breaking old ones  |
+| **Scalable**      | Grows well under more users    | Handles 1 lakh orders smoothly during a festival  |
+
+---
+
+### 🖼️ Diagram: System Design Flow
+
+![System Design Flow](./A_flowchart-style_diagram_in_the_image_illustrates.png)
+![Uploading image.png…]()
+
+
+> 🔺 **Note**: Make sure the image file is saved in your repo with the name above or adjust the path accordingly.
+
+---
+
+### 🙌 Tip:
+Use this as a foundation to understand how real-world systems like **Zomato**, **Amazon**, or **Netflix** are structured and grow.
+
+
 ## Types of System Design
 1. LLD (Low Level Design)
 2. HLD (High Level Design)
