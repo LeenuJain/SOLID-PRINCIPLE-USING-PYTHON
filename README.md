@@ -4,8 +4,6 @@ explanation on solid principle with python code
 # System Desing
 System Design is the process of designing the elements of the system such as **Architecture**, **Modules**, **Components** & different **Interfaces** of those componnents, and **Data Flow** over the system — with the goal of building a system that is **efficient**, **maintainable**, and **scalable**.
 
----
-
 ### 📌 Key Concepts Explained (with Examples)
 
 | Term                        | Simple Meaning                           | Example (Food Delivery App)                    |
@@ -16,8 +14,6 @@ System Design is the process of designing the elements of the system such as **A
 | **Interfaces of Components**| How components talk to each other        | Search takes "pizza" as input, returns results |
 | **Data Flow over System**   | How data moves between parts             | User → Search → Restaurant → Payment           |
 
----
-
 ### 📈 Goals of a Good System
 
 | Term             | Meaning                        | Example in Food App                               |
@@ -25,8 +21,6 @@ System Design is the process of designing the elements of the system such as **A
 | **Efficient**     | Fast, low resource usage       | Quick search & payment                            |
 | **Maintainable**  | Easy to fix or update          | Add new payment method without breaking old ones  |
 | **Scalable**      | Grows well under more users    | Handles 1 lakh orders smoothly during a festival  |
-
----
 
 ## Types of System Design
 1. LLD (Low Level Design)
