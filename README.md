@@ -54,14 +54,14 @@ class CurrencyConvert:
     def currency_convertor(self):
         if self.currency_type == 'Doller':
             in_doller = self.indian_rupees / 94.03
-            return in_doller, self.currency_type
+            return in_doller
         elif self.currency_type == 'Yuro':
             in_yuro = self.indian_rupees / 83.00
-            return in_yuro, self.currency_type
+            return in_yuro
         
     def display_currency(self):
-        currency, type = self.currency_convertor()
-        print(f"Converted INR to {type}, amount is {currency}")
+        currency = self.currency_convertor()
+        print(f"Converted INR to {self.currency_type}, amount is {currency}")
     
 doller_money = CurrencyConvert(1023000, 'Doller')
 doller_money.display_currency()
