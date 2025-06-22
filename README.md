@@ -171,7 +171,8 @@ Now its easy to add any other payment method. link crypto or debit card payments
 You might think, The code looks pretty big now, but even if you want to add another method now, you dont need to change anything in existing code. just create a new class and simply create its object.
 
 ## Liskov Substitution Principle (LSP)
-Any Derived class should be able to substitute its parent class without consumer knowing it. The behavior of a subclass should be consistent with the behavior of the parent class. in simple words a subclass or derived class must able to do all the things that a parent class do.LSP is about **behavioral correctness in substitution**. 
+Any Derived class should be able to substitute its parent class without consumer knowing it. The behavior of a subclass should be consistent with the behavior of the parent class. in simple words a subclass or derived class must able to do all the things that a parent class do.LSP is about **behavioral correctness in substitution**.  
+Example :   
 let's suppose we have a bird class in which two methods are there, one is fly another is eat, now there is two derived classes one is parrot & second is ostrich, so parrot class can perform both fly & eat, but ostrich cannot fly. Here LSP failed.
 
 ```python
