@@ -209,6 +209,58 @@ Real-World Consequences:
 - A developer might assume all Payment types are safe to use, but they’re not.
 - The interface (pay()) promises something COD cannot deliver
 
+Fixing It with Better Design: 
+
+```python
+# Base class (general type)
+class Payment:
+    pass
+
+# Subclass for online payments only
+class OnlinePayment(Payment):
+    def pay(self, amount):
+        print(f"Processing online payment of ₹{amount}")
+
+# Concrete subclasses that follow LSP
+class CreditCardPayment(OnlinePayment):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} via Credit Card")
+
+class UPIPayment(OnlinePayment):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} via UPI")
+
+# Separate class for Cash on Delivery
+class CODPayment(Payment):
+    def confirm_order(self):
+        print("Order confirmed. Please pay ₹amount in cash on delivery.")
+
+# Function that works only with OnlinePayment types
+def process_online_payment(payment: OnlinePayment, amount):
+    payment.pay(amount)
+
+# Function that handles COD orders
+def process_cod_order(payment: CODPayment):
+    payment.confirm_order()
+
+# ✅ Working correctly
+credit_card = CreditCardPayment()
+upi = UPIPayment()
+cod = CODPayment()
+
+# LSP-compliant usage
+process_online_payment(credit_card, 500)   # ✅ OK
+process_online_payment(upi, 300)           # ✅ OK
+
+# COD handled separately
+process_cod_order(cod)                     # ✅ OK
+
+```
+This way:
+- COD is not forced to pretend to be an online payment method.
+- Only classes that can truly pay online are substituted in this flow.
+- LSP is preserved ✅
+
 This code violates the Liskov Substitution Principle (LSP) because the subclass Ostrich does not fully implement the functionality defined in the parent class Bird. Specifically, the flyingbird() method is not implemented for Ostrich. While the code may still work in some cases, it can lead to unexpected issues, particularly when polymorphism is involved.
 To resolve this we need to think of a better architecture, like bird class as generalized, we can create sepearate class of flyingbirds and nonflyingbirds, than derive classes like parrot & ostrich.
 
