@@ -42,9 +42,10 @@ While High-Level Design (HLD) focuses on the architecture and components of the 
 5. Dependency Inversion Principle (DIP)
 
 ## Single Responsibility Principle (SRP)
-This SRP states that **“A class should have only one reason to change”** which means every class should have a single responsibility or sigle purpose. 
-following SRP makes your code more moduler,maintainable and easy to extend. for example. 
-lets suppose you are having a class CurrencyConverter which converts the INR to Any Currency, also it contains display function.
+This SRP states that **“A class should have only one reason to change”** which means every class should have a single responsibility or sigle purpose.  
+![Single Responsibility Principle](./images_png/SRP_image.png)
+following SRP makes your code more moduler,maintainable and easy to extend. 
+Example : lets suppose you are having a class CurrencyConverter which converts the INR to Any Currency, also it contains display function.
 ```python 
 class CurrencyConvert:
     def __init__(self, rupees, curr_type):
